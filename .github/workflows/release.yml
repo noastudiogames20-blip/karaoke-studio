@@ -1,0 +1,95 @@
+name: Build Karaoke Studio
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  desktop:
+    name: Desktop ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            bundles: nsis,msi
+          - os: ubuntu-24.04
+            bundles: appimage,deb,rpm
+          - os: macos-latest
+            bundles: dmg
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf libfuse2 rpm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Tauri bundles
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: Karaoke Studio ${{ github.ref_name }}
+          releaseBody: Automated multi-platform build.
+          releaseDraft: true
+          prerelease: true
+          args: --bundles ${{ matrix.bundles }}
+
+  android:
+    name: Android APK
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK packages
+        run: sdkmanager 'platform-tools' 'platforms;android-35' 'build-tools;35.0.0' 'cmdline-tools;latest'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Initialize Android project
+        run: npx tauri android init
+
+      - name: Build APK
+        run: npx tauri android build --debug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: karaoke-studio-android-apk
+          path: src-tauri/gen/android/app/build/outputs/apk/**/*.apk

@@ -2,6 +2,8 @@
 
 > Beta: this release is experimental and may contain bugs or incomplete integrations. Do not use it as a stable production release.
 
+The native installer keeps numeric version `0.1.0` for MSI/WiX compatibility; Beta status is carried by the GitHub tag and release (`v0.1.0-beta.*`).
+
 Karaoke Studio is a Tauri 2 desktop-first karaoke workspace built with React, TypeScript and Vite. The V10 foundation includes a responsive studio dashboard, local media import, synchronized demo lyrics, microphone permission flow, session scoring UI, navigation and recent-session data.
 
 ## Requirements

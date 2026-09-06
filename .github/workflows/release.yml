@@ -97,7 +97,7 @@ jobs:
   publish-android:
     name: Publish Android APK to release
     if: startsWith(github.ref, 'refs/tags/')
-    needs: [desktop, android]
+    needs: android
     runs-on: ubuntu-24.04
     steps:
       - name: Download APK artifact

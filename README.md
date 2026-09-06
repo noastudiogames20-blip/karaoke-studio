@@ -1,4 +1,6 @@
-# Karaoke Studio V10
+# Karaoke Studio V10 Beta
+
+> Beta: this release is experimental and may contain bugs or incomplete integrations. Do not use it as a stable production release.
 
 Karaoke Studio is a Tauri 2 desktop-first karaoke workspace built with React, TypeScript and Vite. The V10 foundation includes a responsive studio dashboard, local media import, synchronized demo lyrics, microphone permission flow, session scoring UI, navigation and recent-session data.
 

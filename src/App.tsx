@@ -252,7 +252,7 @@ function App() {
         <div className="brand"><span className="brand-mark"><AudioLines size={20} /></span><span>KARAOKE<br /><b>STUDIO</b></span></div>
         <div className="profile"><div className="avatar">AL</div><div><strong>Alex Laurent</strong><small>Level 12 <span>·</span> 2,480 XP</small></div><ChevronDown size={15} /></div>
         <nav>{['Studio', 'Bibliotheque', 'Playlists', 'Progression'].map((item) => <button key={item} className={activeNav === item ? 'active' : ''} onClick={() => setActiveNav(item)}>{item === 'Studio' ? <Radio size={18} /> : item === 'Bibliotheque' ? <Library size={18} /> : item === 'Playlists' ? <ListMusic size={18} /> : <Trophy size={18} />}{item}</button>)}</nav>
-        <div className="sidebar-bottom"><button><Settings2 size={18} />Parametres</button><div className="version">Karaoke Studio <span>V10.0.0</span><div className="brand-credit">Noastudiogames <span>BY Groupes Studios</span><small>Open source software</small></div></div></div>
+        <div className="sidebar-bottom"><button><Settings2 size={18} />Parametres</button><div className="version">Karaoke Studio <span>V10.0.0 BETA</span><div className="brand-credit">Noastudiogames <span>BY Groupes Studios</span><small>Open source software · Beta</small></div></div></div>
       </aside>
 
       <section className="workspace">

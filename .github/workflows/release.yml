@@ -50,7 +50,7 @@ jobs:
           tagName: ${{ github.ref_name }}
           releaseName: Karaoke Studio ${{ github.ref_name }}
           releaseBody: Automated multi-platform build.
-          releaseDraft: true
+          releaseDraft: false
           prerelease: true
           args: --bundles ${{ matrix.bundles }}
 

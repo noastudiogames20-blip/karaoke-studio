@@ -3,20 +3,13 @@ export type MusicProvider = 'youtube' | 'spotify' | 'deezer' | 'soundcloud'
 export type ProviderDefinition = {
   id: MusicProvider
   name: string
-  authUrl: string
   supportsPlaybackEmbed: boolean
   note: string
 }
 
 export const musicProviders: ProviderDefinition[] = [
-  { id: 'youtube', name: 'YouTube', authUrl: 'https://www.youtube.com/', supportsPlaybackEmbed: true, note: 'YouTube IFrame API can provide embedded playback.' },
-  { id: 'spotify', name: 'Spotify', authUrl: 'https://accounts.spotify.com/authorize', supportsPlaybackEmbed: true, note: 'Requires a Spotify developer client ID and OAuth redirect URI.' },
-  { id: 'deezer', name: 'Deezer', authUrl: 'https://connect.deezer.com/oauth/auth.php', supportsPlaybackEmbed: true, note: 'Requires a Deezer application ID and OAuth redirect URI.' },
-  { id: 'soundcloud', name: 'SoundCloud', authUrl: 'https://soundcloud.com/connect', supportsPlaybackEmbed: true, note: 'Requires an approved SoundCloud client and OAuth configuration.' },
+  { id: 'youtube', name: 'YouTube', supportsPlaybackEmbed: true, note: 'Official YouTube embedded player; paste a public video URL.' },
+  { id: 'spotify', name: 'Spotify', supportsPlaybackEmbed: true, note: 'Official Spotify embed; paste a public track, album, or playlist URL.' },
+  { id: 'deezer', name: 'Deezer', supportsPlaybackEmbed: true, note: 'Official Deezer widget; paste a public track, album, or playlist URL.' },
+  { id: 'soundcloud', name: 'SoundCloud', supportsPlaybackEmbed: true, note: 'Official SoundCloud widget; paste a public track or playlist URL.' },
 ]
-
-export function openProviderLogin(provider: MusicProvider) {
-  const definition = musicProviders.find((item) => item.id === provider)
-  if (!definition) return
-  window.open(definition.authUrl, '_blank', 'noopener,noreferrer')
-}

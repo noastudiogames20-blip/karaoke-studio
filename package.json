@@ -1,7 +1,7 @@
 {
   "name": "jeu-de-chant",
   "private": true,
-  "version": "0.1.0-beta.5",
+  "version": "0.1.0-beta.9",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,6 +9,7 @@
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build",
     "build": "tsc -b && vite build",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
     "lint": "oxlint",
     "preview": "vite preview"
   },

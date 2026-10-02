@@ -1,35 +1,35 @@
 # Karaoke Studio V10 Beta
 
-> Beta: this release is experimental and may contain bugs or incomplete integrations. Do not use it as a stable production release.
+> Experimental Beta software. Expect incomplete features and bugs.
 
-The native installer keeps numeric version `0.1.0` for MSI/WiX compatibility; Beta status is carried by the GitHub tag and release (`v0.1.0-beta.*`).
+Karaoke Studio is a Tauri 2 desktop/mobile karaoke application built with React, TypeScript and Vite.
 
-Karaoke Studio is a Tauri 2 desktop-first karaoke workspace built with React, TypeScript and Vite. The V10 foundation includes a responsive studio dashboard, local media import, synchronized demo lyrics, microphone permission flow, session scoring UI, navigation and recent-session data.
+## Working features
 
-## Requirements
+- Local audio playback with play/pause, stop, seek and volume controls.
+- Timed `.lrc` parsing, metadata/offset support, range and gap checks against track duration, cue audition, and manual synchronization adjustment.
+- LRCLIB online search by title and artist; choose a synchronized result after checking its duration.
+- Microphone level and pitch detection. Android includes `RECORD_AUDIO` and `MODIFY_AUDIO_SETTINGS`; iOS declares `NSMicrophoneUsageDescription`.
+- Official embedded playback for public YouTube, Spotify, Deezer and SoundCloud URLs. Playback controls and authentication are provided by each service’s own player.
+- Saved public playlist links and session history are stored locally on the device.
+- In-app update checks query public GitHub prereleases and show release notes/download links.
 
-- Node.js 24 LTS and npm
-- Rust with the MSVC toolchain
-- Visual Studio Build Tools with the Desktop development with C++ workload on Windows
+The app does not yet provide cloud accounts or private playlist synchronization. Those require a deployed authentication backend and registered OAuth client credentials for each provider. The current voice analyzer measures microphone input and pitch; it does not claim full vocal scoring without timed note charts.
 
-## Commands
+## Development
+
+Requirements: Node.js 24, Rust, and on Windows Visual Studio Build Tools with the C++ workload.
 
 ```powershell
-npm install
-npm run dev
+npm ci
+npm test
+npm run lint
 npm run build
 npm run tauri:dev
-npm run tauri:build
 ```
 
-The browser version runs at `http://localhost:5173`. Tauri packages are written to `src-tauri/target/release/bundle` after a successful desktop build.
+## Release builds
 
-## Cloud releases
+GitHub Actions builds Windows `.exe` and `.msi`, Linux `.AppImage`/`.deb`/`.rpm`, macOS `.dmg`, and Android `.apk` when a `v*` tag is pushed. Windows/Linux/macOS builds are independent from Android so an Android failure does not hide desktop installers.
 
-The workflow in `.github/workflows/release.yml` builds Windows (`.exe`, `.msi`), Linux (`.AppImage`, `.deb`, `.rpm`), macOS (`.dmg`) and Android (`.apk`) on GitHub Actions. Run it manually from the Actions tab or push a version tag such as `v0.2.0`.
-
-The macOS and Android artifacts are unsigned by default. iOS (`.ipa`) requires a macOS runner plus Apple Developer signing certificates and provisioning secrets; add those only in GitHub encrypted secrets before enabling an iOS signing job.
-
-## Roadmap
-
-The next slices are real LRC parsing and playback synchronization, Web Audio pitch analysis, persistent local playlists, a SQLite-backed session history, and packaging profiles for Android, Linux and macOS.
+iOS requires a macOS runner. The workflow builds a simulator app without Apple signing. A device-installable `.ipa` requires repository secrets `IOS_CERTIFICATE_P12_BASE64`, `IOS_CERTIFICATE_PASSWORD`, `IOS_PROVISIONING_PROFILE_BASE64`, and `IOS_TEAM_ID`. Store secrets only in GitHub Actions secrets; never commit them.

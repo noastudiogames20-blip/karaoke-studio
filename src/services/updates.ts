@@ -1,4 +1,4 @@
-export const APP_VERSION = '0.1.0-beta.9'
+export const APP_VERSION = '0.1.0-beta.10'
 export const RELEASES_URL = 'https://github.com/noastudiogames20-blip/karaoke-studio/releases'
 const RELEASES_API_URL = 'https://api.github.com/repos/noastudiogames20-blip/karaoke-studio/releases?per_page=20'
 
